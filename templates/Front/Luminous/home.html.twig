@@ -1,342 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KEOS CARD</title>
-
-    <head>
-        <link rel="stylesheet" href="{{ asset('assets/ll_assets/assets/css/all.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/ll_assets/assets/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/ll_assets/assets/css/owl.carousel.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/ll_assets/assets/css/owl.theme.default.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/ll_assets/assets/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/ll_assets/assets/css/responsive.css') }}">
-    </head>
-
-</head>
-
-<body>
-    <div class="main">
-        <header class="inner-header-section">
-            <div class="container">
-                <div class="header-section">
-                    <div class="header-wrapper">
-                        <div class="header-logo">
-                            <a href="{{ path('ll_home') }}">
-                                <h1>EVENTOS</h1>
-                            </a>
+{% extends "Global/luminous/layout.html.twig" %}
+{% block content %}
+    <section class="hero-section">
+        <div class="container">
+            <div class="row gy-4 inner-hero-section">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="hero-section-content">
+                        <h2>TODAS LAS <strong>EXPERIENCIAS</strong> DE LOS <strong>GRANDES PÚBLICOS</strong> EN UN
+                            MISMO ESPACIO.</h2>
+                        <P class="hero-section-paragraph">Gestiona, controla y promociona tus eventos de una manera
+                            fácil y rápida a la medida de tus necesidades.</P>
+                    </div>
+                    <div class="comenzer-button tex-center">
+                        <div class="formContainer">
+                            <form action="">
+                                <fieldset class="fieldInput">
+                                    <input class="form-input" type="email" placeholder="Registra tu email">
+                                    <button type="submit" class="form-submit">Mas informacion</button>
+                                </fieldset>
+                            </form>
                         </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="hero-section-image">
+                        <img src="{{ asset('assets/ll_assets/assets/img/eventos-hero.png') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="header-list-item">
-                            <ul class="">
+    <section class="categorias-section">
+        <div class="container">
+            <div class="categorias-headign">
+                <h2>CATEGORÍAS MÁS <strong>DESTACADAS</strong></h2>
+            </div>
+            <div class="categorias-wrapper">
+                <div class="row gy-4 justify-content-center text-center">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src=" {{ asset('assets/ll_assets/assets/img/Categorias-Grupo-1.png') }}" alt="">
+                        </div>
+                    </div>
 
-                                <li class="language-button-main">
-                                    <div class="language-button-main-up-down">
-                                        <i class="fas fa-chevron-down chevron-down"></i>
-                                    </div>
-                                    <select name="language" id="language" class="form-control selectpicker language-dropdown-menu"> 
-                                         <option value="1">Bangle</option>       
-                                         <option value="2">English</option>       
-                                         <option value="3">Hindi</option>       
-                                         <option value="3">spanish</option>       
-                                         <option value="3">Hindi</option>   
-                                    </select>
-                                </li>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-2.png') }} " alt="">
+                        </div>
+                    </div>
 
-                                <a href="#"><button class="btn btn-outline-info sign-up-button">Sign
-                                        Up</button></a>
-                                <a href="{{ path('ll_signin') }}"><button
-                                        class="btn btn-outline-info login-button">Login</button></a>
-                            </ul>
-                            <div class="mobile-menu">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                                    data-bs-target="#rightOffcanvas" aria-controls="rightOffcanvas">
-                                    <i class="fas fa-bars"></i></button>
-                                <div class="offcanvas offcanvas-end" tabindex="-1" id="rightOffcanvas"
-                                    aria-labelledby="rightOffcanvasLabel">
-                                    <div class="offcanvas-header">
-                                        <h5 class="offcanvas-title" id="rightOffcanvasLabel"></h5>
-                                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="offcanvas-body">
-                                        <div class="mobile-menu-items">
-                                            <span class="mobile-menu-items">
-                                                <a href="index.html" class="active">Home</a>
-                                            </span>
-                                            <span class="mobile-menu-items menu-selectpicker">
-                                                <select class="selectpicker" data-width="fit">
-                                                    <option
-                                                        data-content='<span class="flag-icon flag-icon-us"></span> English'>
-                                                        English</option>
-                                                    <option
-                                                        data-content='<span class="flag-icon flag-icon-mx"></span> Español'>
-                                                        Español</option>
-                                                </select>
-                                            </span>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-3.png') }} " alt="">
+                        </div>
+                    </div>
 
-                                    
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-4.png') }}" alt="">
+                        </div>
+                    </div>
 
-                                            <span class="mobile-menu-items">
-                                                <a href="{{ path('ll_signin') }}"><button
-                                                        class="btn btn-outline-info mobile-menu-login-button">Login</button></a>
-                                            </span>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-5.png') }} " alt="">
+                        </div>
+                    </div>
 
-                                            <span class="mobile-menu-items">
-                                                <a href=""><button
-                                                        class="btn btn-outline-info mobile-menu-sign-up-button">Sign
-                                                        Up</button>
-                                                </a>
-                                            </span>
-                                        </div>
-                                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-6.png') }} " alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-7.png') }}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="categorias-image">
+                            <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-8.png') }} " alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="eventos-inteligente">
+        <div class="container">
+            <div class="eventos-inteligente-heading">
+                <h2>Con <strong>Eventos</strong> todo es más <strong>dinámico</strong>, más
+                    <strong>inteligente</strong>.</h2>
+                <p>Facilitamos:</p>
+            </div>
+            <div class="wrapper-eventos-inteligente">
+                <div class="row gy-4 justify-content-center">
+                    <div class="col-lg-5 col-12">
+                        <div class="eventos-inteligente-card-item">
+                            <h4>Los procesos de registro</h4>
+                            <img src="{{ asset('assets/ll_assets/assets/img/procesos-image.svg') }}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 col-12">
+                        <div class="eventos-inteligente-card-item">
+                            <h4>La forma de inscribirse</h4>
+                            <img src="{{ asset('assets/ll_assets/assets/img/forma-image.svg') }}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 col-12">
+                        <div class="eventos-inteligente-card-item">
+                            <h4>La gestion empresarial</h4>
+                            <img src="{{ asset('assets/ll_assets/assets/img/empresarial-image.svg') }}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 col-12">
+                        <div class="eventos-inteligente-card-item">
+                            <h4>La administracion de organizadores y participantes</h4>
+                            <img src="{{ asset('assets/ll_assets/assets/img/organizadores-image.svg') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="eventos-necesitan-section">
+        <div class="container">
+            <div class="wrapper-eventos-necesitan">
+                <div class="row gy-4 justify-content-center align-items-center">
+                    <div class="col-lg-6 col-12">
+                        <div class="eventos-necesitan-content">
+                            <strong>TUS PRÓXIMOS <i>EVENTOS</i> NECESITAN:</strong>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="row gy-4 position-relative">
+                            <div class="col-lg-6">
+                                <div class="eventos-necesitan-item-card">
+                                    <h5>Pagos Online</h5>
+                                    <p>Transcciones en linea para el registro de tus asistentes.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="eventos-necesitan-item-card wrapper-eventos-item">
+                                    <h5>Gestiona de stands</h5>
+                                    <p>Los participantes tienen la posibilidad de reservar y comprar espacios en
+                                        linea.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gy-4 position-relative">
+                            <div class="col-lg-6">
+                                <div class="eventos-necesitan-item-card mt-5 third-child">
+                                    <h5>Coordinacion de conferencias</h5>
+                                    <p>Brinda toda la informacion del evento a tus participantes e invitados</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="eventos-necesitan-item-card inner-wrapper-eventos-item">
+
+                                
+                                    <h5>Chatbot</h5>
+                                    <p>Con una comucicacion limitada resuelve las dudas de los usuarios acerca de
+                                        los eventos por medio de mensajes de texto.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </header>
-
-        <section class="hero-section">
-            <div class="container">
-                <div class="row gy-4 inner-hero-section">
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="hero-section-content">
-                            <h2>TODAS LAS <strong>EXPERIENCIAS</strong> DE LOS <strong>GRANDES PÚBLICOS</strong> EN UN
-                                MISMO ESPACIO.</h2>
-                            <P class="hero-section-paragraph">Gestiona, controla y promociona tus eventos de una manera
-                                fácil y rápida a la medida de tus necesidades.</P>
-                        </div>
-                        <div class="comenzer-button tex-center">
-                            <div class="formContainer">
-                                <form action="">
-                                    <fieldset class="fieldInput">
-                                        <input class="form-input" type="email" placeholder="Registra tu email">
-                                        <button type="submit" class="form-submit">Mas informacion</button>
-                                    </fieldset>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="hero-section-image">
-                            <img src="{{ asset('assets/ll_assets/assets/img/eventos-hero.png') }}" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="categorias-section">
-            <div class="container">
-                <div class="categorias-headign">
-                    <h2>CATEGORÍAS MÁS <strong>DESTACADAS</strong></h2>
-                </div>
-                <div class="categorias-wrapper">
-                    <div class="row gy-4 justify-content-center text-center">
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src=" {{ asset('assets/ll_assets/assets/img/Categorias-Grupo-1.png') }}" alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-2.png') }} " alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-3.png') }} " alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-4.png') }}" alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-5.png') }} " alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-6.png') }} " alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-7.png') }}" alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="categorias-image">
-                                <img src="{{ asset('assets/ll_assets/assets/img/Categorias-Grupo-8.png') }} " alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="eventos-inteligente">
-            <div class="container">
-                <div class="eventos-inteligente-heading">
-                    <h2>Con <strong>Eventos</strong> todo es más <strong>dinámico</strong>, más
-                        <strong>inteligente</strong>.</h2>
-                    <p>Facilitamos:</p>
-                </div>
-                <div class="wrapper-eventos-inteligente">
-                    <div class="row gy-4 justify-content-center">
-                        <div class="col-lg-5 col-12">
-                            <div class="eventos-inteligente-card-item">
-                                <h4>Los procesos de registro</h4>
-                                <img src="{{ asset('assets/ll_assets/assets/img/procesos-image.svg') }}" alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-5 col-12">
-                            <div class="eventos-inteligente-card-item">
-                                <h4>La forma de inscribirse</h4>
-                                <img src="{{ asset('assets/ll_assets/assets/img/forma-image.svg') }}" alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-5 col-12">
-                            <div class="eventos-inteligente-card-item">
-                                <h4>La gestion empresarial</h4>
-                                <img src="{{ asset('assets/ll_assets/assets/img/empresarial-image.svg') }}" alt="">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-5 col-12">
-                            <div class="eventos-inteligente-card-item">
-                                <h4>La administracion de organizadores y participantes</h4>
-                                <img src="{{ asset('assets/ll_assets/assets/img/organizadores-image.svg') }}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <section class="eventos-necesitan-section">
-            <div class="container">
-                <div class="wrapper-eventos-necesitan">
-                    <div class="row gy-4 justify-content-center align-items-center">
-                        <div class="col-lg-6 col-12">
-                            <div class="eventos-necesitan-content">
-                                <strong>TUS PRÓXIMOS <i>EVENTOS</i> NECESITAN:</strong>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-12">
-                            <div class="row gy-4 position-relative">
-                                <div class="col-lg-6">
-                                    <div class="eventos-necesitan-item-card">
-                                        <h5>Pagos Online</h5>
-                                        <p>Transcciones en linea para el registro de tus asistentes.</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="eventos-necesitan-item-card wrapper-eventos-item">
-                                        <h5>Gestiona de stands</h5>
-                                        <p>Los participantes tienen la posibilidad de reservar y comprar espacios en
-                                            linea.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row gy-4 position-relative">
-                                <div class="col-lg-6">
-                                    <div class="eventos-necesitan-item-card mt-5 third-child">
-                                        <h5>Coordinacion de conferencias</h5>
-                                        <p>Brinda toda la informacion del evento a tus participantes e invitados</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="eventos-necesitan-item-card inner-wrapper-eventos-item">
-
-                                    
-                                        <h5>Chatbot</h5>
-                                        <p>Con una comucicacion limitada resuelve las dudas de los usuarios acerca de
-                                            los eventos por medio de mensajes de texto.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <div class="container">
-                <div class="main-footer-section">
-                    <div class="footer-logo">
-                        <img src="{{ asset('assets/ll_assets/assets/img/Icon - footer - keos@2x.png') }}" alt="">
-                    </div>
-                    <div class="footer-list-item">
-                        <ul>
-                            <li><a href="">Productos</a></li>
-                            <li><a href="">Planes</a></li>
-                            <li><a href="">Industria</a></li>
-                            <li><a href="">Eventos</a></li>
-                            <li><a href="">Blogs</a></li>
-                            <li><a href="">Sobre nosotros</a></li>
-                            <li><a href="">Agendar</a></li>
-                            <li><a class="text-underline" href="">Marketplace</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="social-media-icons">
-                        <span>Siguenos en redes</span>
-                        <ul>
-                            <li><a href=""><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href=""><i class="fab fa-instagram"></i></a></li>
-                            <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href=""><i class="fab fa-youtube"></i></a></li>
-                            <li><a href=""><i class="fab fa-tiktok"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="inner-footer">
-                    <div class="wrapper-footer">
-                        <div class="footer-image">
-                            <span><img class="google-image" src="{{ asset('assets/ll_assets/assets/img/google-icon-logo.svg') }}" alt="">Google
-                                <br>Partner</span>
-                            <span><img class="iso-image" src="{{ asset('assets/ll_assets/assets/img/iso-27001-information-security.webp') }}" alt="">
-                                27001</span>
-                            <span><img class="pci-image" src="{{ asset('assets/ll_assets/assets/img/Trazado 978@2x.png') }} " alt=""> DSS <br>
-                                Certified</span>
-                        </div>
-                        <div class="copyright-content">
-                            <p>Copyright 2023 Todos los derechos reservados</p>
-                        </div>
-                        <div class="politica-content">
-                            <p>Politica de seguridad de informacion</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <script src="{{ asset('assets/ll_assets/assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/ll_assets/assets/js/jquery-3.6.2.min.js') }}"></script>
-    <script src="{{ asset('assets/ll_assets/assets/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets/ll_assets/assets/js/main.js') }}"></script>
-</body>
-
-</html>
+        </div>
+    </section>
+{% endblock %}

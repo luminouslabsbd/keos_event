@@ -12,8 +12,14 @@
         <default key="_controller">App\Controller\bundles\FOSUserBundle\RegistrationController::registerOrganizerAction</default>
     </route>
 
-    <route id="fos_user_registration_check_email" path="/signup/check-email" methods="GET">
+    <!-- before code -->
+    <!-- <route id="fos_user_registration_check_email" path="/signup/check-email" methods="GET">
         <default key="_controller">App\Controller\bundles\FOSUserBundle\RegistrationController::checkEmailAction</default>
+    </route> -->
+
+    <!-- after code -->
+    <route id="fos_user_registration_check_email" path="/signup/check-email" methods="GET">
+        <default key="_controller">App\Controller\Front\LuminousController::checkEmailAction</default>
     </route>
 
     <route id="fos_user_registration_confirm" path="/signup/confirm/{token}" methods="GET">

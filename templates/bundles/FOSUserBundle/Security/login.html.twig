@@ -15,6 +15,7 @@
                     <div class="col-12 mb-5">
                         <h1 class="card-title text-center">{{ pagetitle }}</h1>
                     </div>
+                    
                     {% if services.getSetting("social_login_facebook_enabled") == "yes" or services.getSetting("social_login_google_enabled") == "yes" %}
                         <p>
                             {% if services.getSetting("social_login_facebook_enabled") == "yes" %}
@@ -31,6 +32,7 @@
                     {% if error %}
                         {% include "Global/message.html.twig" with { message: (error.messageKey|trans(error.messageData, 'security')), type: "danger", icon: "fas fa-exclamation-circle" } %}
                     {% endif %}
+
                     <form action="{{ path("fos_user_security_check") }}" method="post">
                         {% if csrf_token %}
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

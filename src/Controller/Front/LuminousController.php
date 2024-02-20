@@ -59,7 +59,7 @@ class LuminousController extends Controller {
     }
 
     /**
-     * @Route("/luminous/ll_home", name="ll_home")
+     * @Route("/", name="ll_home")
     */
     
     public function ll_home(Request $request, PaginatorInterface $paginator, TranslatorInterface $translator,AppServices $services) {
@@ -72,7 +72,7 @@ class LuminousController extends Controller {
     */
 
     public function ll_signin(Request $request, PaginatorInterface $paginator, AppServices $services, TranslatorInterface $translator) {
-
+// dd($request->all());
           
             if ($this->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
                 return $this->redirectToRoute("dashboard_index");
@@ -117,13 +117,10 @@ class LuminousController extends Controller {
     */
 
     public function ll_signup_attendee(Request $request) {
-
-
         $user = $this->userManager->createUser();
         $user->setEnabled(true);
 
         $form = $this->createForm(RegistrationType::class, $user);
-
         if ($this->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
             return $this->redirectToRoute("dashboard_index");
         }
@@ -141,23 +138,15 @@ class LuminousController extends Controller {
             $form->remove("recaptcha");
         }
 
-
         $form->setData($user);
-
         $form->handleRequest($request);
         
-
         try {
             if ($form->isSubmitted()) {
-                // dd('test', $form, $form->isValid());
-
-
-
-                if (true || $form->isValid()) {
+                if ($form->isValid()) {
                     $event = new FormEvent($form, $request);
                     $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
                     $user->addRole('ROLE_ATTENDEE');
-
 
                     $this->userManager->updateUser($user);
                     if (null === $response = $event->getResponse()) {
@@ -166,8 +155,6 @@ class LuminousController extends Controller {
                     }
                     $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
                     return $response;
-                } else {
-    
                 }
                 $event = new FormEvent($form, $request);
                 $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_FAILURE, $event);
@@ -179,18 +166,11 @@ class LuminousController extends Controller {
             dd($ex->getMessage());
         }
         
-
         // $csrfToken = $this->tokenManager ? $this->tokenManager->getToken('authenticate')->getValue() : null;
 
         $data = [
             'form' => $form->createView(),
         ];
-
-return $this->render('@FOSUser/Registration/register-attendee.html.twig', array(
-            'form' => $form->createView(),
-));
-        
-
         return $this->render('Front/Luminous/attendee_signup.html.twig', $data);
 
     }       
@@ -200,8 +180,57 @@ return $this->render('@FOSUser/Registration/register-attendee.html.twig', array(
     */
 
     public function ll_signup_organizer(Request $request, PaginatorInterface $paginator, AppServices $services, TranslatorInterface $translator) {
-        
-        return $this->render('Front/Luminous/organizer_signup.html.twig');
+        if ($this->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
+            return $this->redirectToRoute("dashboard_index");
+        }
+
+        $user = $this->userManager->createUser();
+        $user->setEnabled(true);
+
+        $event = new GetResponseUserEvent($user, $request);
+        $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+
+        if (null !== $event->getResponse()) {
+            return $event->getResponse();
+        }
+
+        $form = $this->formFactory->createForm();
+        if ($this->services->getSetting("google_recaptcha_enabled") == "no") {
+            $form->remove("recaptcha");
+        }
+        $form->setData($user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $event = new FormEvent($form, $request);
+                $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+                $user->addRole('ROLE_ORGANIZER');
+                $user->getOrganizer()->setUser($user);
+                $this->userManager->updateUser($user);
+
+                if (null === $response = $event->getResponse()) {
+                    $url = $this->generateUrl('fos_user_registration_confirmed');
+                    $response = new RedirectResponse($url);
+                }
+
+                $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+                return $response;
+            }
+
+            $event = new FormEvent($form, $request);
+            $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_FAILURE, $event);
+
+            if (null !== $response = $event->getResponse()) {
+                return $response;
+            }
+        }
+
+        return $this->render('Front/Luminous/organizer_signup.html.twig', array(
+                    'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -211,6 +240,25 @@ return $this->render('@FOSUser/Registration/register-attendee.html.twig', array(
     public function ll_forget_password(Request $request, PaginatorInterface $paginator, AppServices $services, TranslatorInterface $translator) {
         
         return $this->render('Front/Luminous/forget_password.html.twig');
+    }
+
+
+     public function checkEmailAction(Request $request) {
+        $email = $request->getSession()->get('fos_user_send_confirmation_email/email');
+
+        if (empty($email)) {
+            return new RedirectResponse($this->generateUrl('ll_home'));
+        }
+
+        $request->getSession()->remove('fos_user_send_confirmation_email/email');
+        $user = $this->userManager->findUserByEmail($email);
+
+        if (null === $user) {
+            return new RedirectResponse($this->container->get('router')->generate('ll_signin'));
+        }
+        return $this->render('Front/Luminous/check_email.html.twig', array(
+            'user' => $user,
+        ));
     }
 
 

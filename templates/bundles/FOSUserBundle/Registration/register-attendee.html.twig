@@ -31,6 +31,7 @@
                             <span>{{ 'OR'|trans({}, 'messages') }}</span>
                         </p>
                     {% endif %}
+                    
                     {{ form_start(form, {'action': path('ll_signup_attendee'), 'method': 'post', 'attr': {'novalidate': 'novalidate'}}) }}
 
                     {{ form_errors(form) }}

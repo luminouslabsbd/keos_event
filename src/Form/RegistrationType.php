@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use App\Form\OrganizerRegistrationType;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationType extends AbstractType {
 
@@ -31,15 +32,18 @@ class RegistrationType extends AbstractType {
                     )
                 ])
                 ->add('username', TextType::class, [
-                    'purify_html' => true,
-                    'required' => true,
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                    ],
                     'attr' => array(
                         'placeholder' => 'Username'
                     )
                 ])
                 ->add('email', EmailType::class, [
-                    'purify_html' => true,
-                    'required' => true,
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new Assert\Email(),
+                    ],
                     'attr' => array(
                         'placeholder' => 'Email'
                     )

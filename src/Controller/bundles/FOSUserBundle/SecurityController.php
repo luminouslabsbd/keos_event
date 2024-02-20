@@ -67,9 +67,7 @@ class SecurityController extends Controller {
 
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
-
         $csrfToken = $this->tokenManager ? $this->tokenManager->getToken('authenticate')->getValue() : null;
-
         return $this->renderLogin(array(
                     'last_username' => $lastUsername,
                     'error' => $error,
@@ -95,6 +93,7 @@ class SecurityController extends Controller {
      */
     protected function renderLogin(array $data) {
         return $this->render('@FOSUser/Security/login.html.twig', $data);
+        // return $this->render('Front/Luminous/signin.html.twig', $data);
     }
 
 }
