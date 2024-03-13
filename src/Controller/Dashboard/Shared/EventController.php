@@ -12,6 +12,11 @@ use App\Entity\Event;
 use App\Form\EventType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
 
 class EventController extends Controller {
 
@@ -42,7 +47,7 @@ class EventController extends Controller {
      * @Route("/organizer/my-events/add", name="dashboard_organizer_event_add", methods="GET|POST")
      * @Route("/organizer/my-events/{slug}/edit", name="dashboard_organizer_event_edit", methods="GET|POST")
      */
-    public function addedit(Request $request, AppServices $services, TranslatorInterface $translator, $slug = null, AuthorizationCheckerInterface $authChecker) {
+    public function addedit(Request $request, AppServices $services, TranslatorInterface $translator, $slug = null, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $entityManager) {
         $em = $this->getDoctrine()->getManager();
 
         $organizer = "all";
@@ -65,7 +70,14 @@ class EventController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+
             if ($form->isValid()) {
+
+                // event_mails table save data
+                $input = $request->request->all();
+                $file = $_FILES['subscriber_file'];
+                $this->event_mails_data_save($input, $file, $entityManager);
+
                 foreach ($event->getImages() as $image) {
                     $image->setEvent($event);
                 }
@@ -95,14 +107,81 @@ class EventController extends Controller {
                 } elseif ($authChecker->isGranted('ROLE_ADMINISTRATOR')) {
                     return $this->redirectToRoute("dashboard_administrator_event");
                 }
+
+               
+
             } else {
                 $this->addFlash('error', $translator->trans('The form contains invalid data'));
             }
         }
+
+        // organizer list get
+        $sqlSelect = "SELECT * FROM subscriber_lists";
+        $statementSelect = $entityManager->getConnection()->prepare($sqlSelect);
+        $statementSelect->execute();
+        $subscriber_lists = $statementSelect->fetchAll();
+
         return $this->render('Dashboard/Shared/Event/add-edit.html.twig', array(
-                    "event" => $event,
-                    "form" => $form->createView(),
+            "event"          => $event,
+            "form"           => $form->createView(),
+            "subscriber_lists" => $subscriber_lists
         ));
+    }
+
+
+    public function event_mails_data_save($input, $file, $entityManager)
+    {
+        if ($file['error'] === UPLOAD_ERR_OK) {
+            $tmpFilePath = $file['tmp_name'];
+            if ($file['type'] === 'text/csv') {
+
+                $handle = fopen($tmpFilePath, 'r');
+                $datas = [];
+                $headers = fgetcsv($handle);
+                while (($row = fgetcsv($handle)) !== false) {
+                    $datas[] = array_combine($headers, $row);
+                }
+                fclose($handle);
+                $subscriber_list_id = $input['subscriber_id'];
+                $send_type = $input['event']['sendevent'] == 1 ? 'corporate' : 'massive';
+                $send_chanel = $input['event']['sendchanel'] == 1 ? 'whatsapp' : 'email';
+                foreach ($datas as $data) {
+                    $data['name'];
+                    $data['surname'];
+                    $data['email'];
+                    $data['phone_number'];
+                    $data['department'];
+                    $data['city'];
+                    $data['country'];
+                    $data['address'];
+
+                    $sql = "INSERT INTO event_mails (send_type, send_chanel,subscriber_list_id, name, surname, email, phone_number, department, city, country,address) 
+                    VALUES (:send_type, :send_chanel,:subscriber_list_id, :name, :surname, :email, :phone_number, :department, :city, :country,:address)";
+                    $params = [
+                        'send_type' => $send_type,
+                        'send_chanel' => $send_chanel,
+                        'subscriber_list_id' => $subscriber_list_id,
+                        'name' => $data['name'],
+                        'surname' => $data['surname'],
+                        'email' => $data['email'],
+                        'phone_number' => $data['phone_number'],
+                        'department' => $data['department'],
+                        'city' => $data['city'],
+                        'country' => $data['country'],
+                        'address' => $data['address'],
+                    ];
+
+                    $statement = $entityManager->getConnection()->prepare($sql);
+                    $statement->execute($params);
+
+                }
+
+            } else {
+                echo 'File is not a CSV.';
+            }
+        } else {
+            echo 'File upload failed.';
+        }
     }
 
     /**
@@ -205,5 +284,46 @@ class EventController extends Controller {
                     'event' => $event,
         ]);
     }
+
+
+    /**
+     * @Route("/organizer/my-events/addlist", name="dashboard_organizer_event_addlist", methods="GET|POST")
+     */
+    public function addlist(Request $request, EntityManagerInterface $entityManager)
+    {
+        $input = $request->request->all();
+
+        $sql = "INSERT INTO subscriber_lists (name, tag, description) VALUES (:name, :tag, :description)";
+        $params = [
+            'name'          => trim($input['name']),
+            'tag'           => trim($input['tag']),
+            'description'   => trim($input['description'])
+        ];
+
+        $statement = $entityManager->getConnection()->prepare($sql);
+        $statement->execute($params);
+        return $this->redirectToRoute('dashboard_organizer_event_add');
+    }
+
+    /**
+     * @Route("/file/preview", name="file_preview_download", methods="GET")
+     */
+    public function filePreview(Request $request, KernelInterface $kernel)
+    {
+        $filePath = $kernel->getProjectDir() . '/public/demo_file.csv';
+        if (!file_exists($filePath)) {
+            throw $this->createNotFoundException('The file does not exist');
+        }
+
+        $response = new BinaryFileResponse($filePath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, basename($filePath));
+        return $response;
+
+    }
+
+
+
+
+
 
 }

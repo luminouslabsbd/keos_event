@@ -9,8 +9,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Service\AppServices;
 use App\Entity\Venue;
 use App\Form\VenueType;
+use App\Service\GoogleMeetService;
+use App\Service\ZoomService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class VenueController extends Controller {
 
@@ -34,13 +37,28 @@ class VenueController extends Controller {
         ]);
     }
 
+    public function getGoogleMeetingData($entityManager)
+    {
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
+        $nowFormatted = $now->format('Y-m-d H:i:s');
+
+        $sql = "SELECT * FROM google_meetings WHERE end_date > :now";
+        $statement = $entityManager->getConnection()->prepare($sql);
+        $statement->execute(['now' => $nowFormatted]);
+        $meetings = $statement->fetchAll();
+
+        return $meetings;
+    }
+
+
     /**
      * @Route("/administrator/manage-venues/add", name="dashboard_administrator_venue_add", methods="GET|POST")
      * @Route("/administrator/manage-venues/{slug}/edit", name="dashboard_administrator_venue_edit", methods="GET|POST")
      * @Route("/organizer/my-venues/add", name="dashboard_organizer_venue_add", methods="GET|POST")
      * @Route("/organizer/my-venues/{slug}/edit", name="dashboard_organizer_venue_edit", methods="GET|POST")
      */
-    public function addedit(Request $request, AppServices $services, TranslatorInterface $translator, $slug = null, AuthorizationCheckerInterface $authChecker) {
+    public function addedit(Request $request, AppServices $services, TranslatorInterface $translator, $slug = null, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $entityManager) {
+
         $em = $this->getDoctrine()->getManager();
 
         $organizer = "all";
@@ -90,9 +108,29 @@ class VenueController extends Controller {
                 $this->addFlash('error', $translator->trans('The form contains invalid data'));
             }
         }
+
+        // zoom all meeting get
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $apiType = 'zoom';
+        $sqlSelect = "SELECT * FROM api_settings WHERE user_id = :user_id AND api_type = :api_type";
+        $paramsSelect = [
+            'user_id' => $userId,
+            'api_type' => $apiType,
+        ];
+        $statementSelect = $entityManager->getConnection()->prepare($sqlSelect);
+        $statementSelect->execute($paramsSelect);
+        $zoom_data = $statementSelect->fetch();
+
+        $service = new ZoomService($zoom_data['zoom_account_id'] ?? '', $zoom_data['zoom_clint_id'] ?? '', $zoom_data['zoom_clint_secret'] ?? '');
+        $zoom_meeting = $service->getAllMeeting();
+        $google_meeting = $this->getGoogleMeetingData($entityManager);
+
         return $this->render('Dashboard/Shared/Venue/add-edit.html.twig', array(
-                    "venue" => $venue,
-                    "form" => $form->createView(),
+            "venue" => $venue,
+            "form" => $form->createView(),
+            'zoom_meeting' => $zoom_meeting,
+            'google_meeting' => $google_meeting,
         ));
     }
 

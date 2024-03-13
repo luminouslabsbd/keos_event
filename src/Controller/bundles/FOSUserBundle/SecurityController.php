@@ -92,8 +92,8 @@ class SecurityController extends Controller {
      * @return Response
      */
     protected function renderLogin(array $data) {
-        return $this->render('@FOSUser/Security/login.html.twig', $data);
-        // return $this->render('Front/Luminous/signin.html.twig', $data);
+        // return $this->render('@FOSUser/Security/login.html.twig', $data);
+        return $this->render('Front/Luminous/signin.html.twig', $data);
     }
 
 }

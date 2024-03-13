@@ -23,9 +23,46 @@
                     <div class="card box">
                         <div class="card-body">
                             {% include "Global/message.html.twig" with { type: "info", icon: "fas fa-info-circle", message: ("The fields preceded with a red * are mandatory"|trans) } %}
+
                             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-                            {{ form_widget(form) }}
+                            {{ form_row(form.category) }}
+                            {{ form_row(form.sendevent) }}
+                            {{ form_row(form.sendchanel) }}
+                            
+                                <div class="cus_form_event">
+                                    <div class="form-group">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-1">
+                                                <span  class="btn btn-primary">List</span>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <select id="" name="subscriber_id" class="form-control" >
+                                                    {% for subscriber_list in subscriber_lists %}
+                                                    <option value="{{ subscriber_list['id'] }}">{{ subscriber_list['name'] }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <span class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">+</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row justify-content-center mt-4">
+                                            <div class="col-md-6">
+                                                <input class="form-control" type="file" required name="subscriber_file" placeholder="Upload a csv" accept=".csv" />
+                                            </div>
+                                            <div class="col-md-1">
+                                                <a href="{{path('file_preview_download')}}" class="btn btn-primary">Demo CSV</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{ form_rest(form) }}
                             {{ form_end(form) }}
+
+
+
                         </div>
                     </div>
                 </div>
@@ -33,6 +70,47 @@
 
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">New list</h5>
+                </div>
+                <form action="{{path('dashboard_organizer_event_addlist')}}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="list_form">
+                            <div class="form-group">
+                                <label class="required">Name</label>
+                                <input type="text" name="name" required class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Tag (optional)</label>
+                                <input type="text" name="tag" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Description (optional)</label>
+                                <textarea class="form-control" name="description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
 
 {% endblock %}
 

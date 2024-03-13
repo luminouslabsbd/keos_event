@@ -293,6 +293,10 @@ class Event {
      */
     private $enablereviews = true;
 
+    private $sendevent = true;
+
+    private $sendchanel = true;
+
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"create", "update"})
@@ -634,6 +638,10 @@ class Event {
     }
 
     public function getCategory() {
+        return $this->category;
+    }
+    public function getSajjad()
+    {
         return $this->category;
     }
 
@@ -1081,6 +1089,26 @@ class Event {
 
     public function setEnablereviews($enablereviews) {
         $this->enablereviews = $enablereviews;
+
+        return $this;
+    }
+
+    public function getSendevent() {
+        return $this->sendevent;
+    }
+
+    public function setSendevent($sendevent) {
+        $this->sendevent = $sendevent;
+
+        return $this;
+    }
+
+    public function getSendchanel() {
+        return $this->sendchanel;
+    }
+
+    public function setSendchanel($sendchanel) {
+        $this->sendchanel = $sendchanel;
 
         return $this;
     }

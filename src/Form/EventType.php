@@ -44,6 +44,24 @@ class EventType extends AbstractType {
                     },
                     'attr' => ['class' => 'select2', 'data-sort-options' => '1']
                 ])
+
+                ->add('sendevent', ChoiceType::class, [
+                    'required' => true,
+                    'multiple' => false,
+                    'expanded' => true,
+                    'choices' => ['Massive' => false, 'Corporate' => true],
+                    'label' => false,
+                    'label_attr' => ['class' => 'radio-custom radio-inline']
+                ])
+                ->add('sendchanel', ChoiceType::class, [
+                    'required' => true,
+                    'multiple' => false,
+                    'expanded' => true,
+                    'choices' => ['Email' => false, 'Whatsapp' => true],
+                    'label' => false,
+                    'label_attr' => ['class' => 'radio-custom radio-inline']
+                ])
+             
                 ->add('translations', TranslationsType::class, [
                     'label' => 'Event details',
                     'fields' => [

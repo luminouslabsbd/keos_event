@@ -156,5 +156,26 @@ app_api_create_user_ticket:
     trailing_slash_on_root: false
 
 
+google_redirect:
+    path: /google/redirect
+    controller: App\Controller\Dashboard\Shared\ApiIntegrationController::googleMeetingRedirect
+
+zoom_api_setting:
+    path: /zoom/api/setting
+    controller: App\Controller\Dashboard\Organizer\AccountController::zoom_api_setting
+
+google_api_setting:
+    path: /google/api/setting
+    controller: App\Controller\Dashboard\Organizer\AccountController::google_api_setting
 
 
+
+chatbot_train:
+    path: /chatbot-train/{type}
+    controller: 'App\Controller\Dashboard\ChatBot\ChatBotController::createChatBotTrain'
+    methods: ['GET']
+
+chatbot_train_store:
+    path: /chatbot-train-store/{type}
+    controller: 'App\Controller\Dashboard\ChatBot\ChatBotController::createChatBotTrainStore'
+    methods: ['POST']

@@ -231,6 +231,25 @@
     </li>
 
     <li class="nav-item">
+        <a href="#account-submenu-chatbot" data-toggle="collapse" data-parent="#dashboard-menu" class="nav-link dropdown-toggle">
+            <i class="fas fa-user-cog fa-fw"></i> Chatbot
+        </a>
+        <ul id="account-submenu-chatbot" class="nav flex-column ml-3 collapse show">
+            <li class="nav-item">
+                <a href="{{ path('chatbot_train',{'type':'text'}) }}" class="nav-link {% if routename == "fos_user_change_password" %}active{% endif %}">
+                    Train By Text
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ path('chatbot_train',{'type':'attachment'})  }}" class="nav-link {% if routename == "fos_user_change_password" %}active{% endif %}">
+                    Train By Attachment
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="nav-item">
         <a href="#scanner-app-submenu-{{random}}" data-toggle="collapse" data-parent="#dashboard-menu" class="nav-link dropdown-toggle">
             <i class="fas fa-qrcode fa-fw"></i> {{'Scanner App' | trans}}
         </a>
