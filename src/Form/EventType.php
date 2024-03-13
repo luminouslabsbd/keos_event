@@ -57,7 +57,7 @@ class EventType extends AbstractType {
                     'required' => true,
                     'multiple' => false,
                     'expanded' => true,
-                    'choices' => ['Email' => false, 'Whatsapp' => true],
+                    'choices' => ['Email' => true, 'Whatsapp' => false],
                     'label' => false,
                     'label_attr' => ['class' => 'radio-custom radio-inline']
                 ])
