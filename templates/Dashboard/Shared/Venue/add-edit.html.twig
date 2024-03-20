@@ -79,7 +79,7 @@
                                                 <td>{{ meeting['timezone'] ?? '' }}</td>
                                                 <td>{{ created_at|date('d M, Y H:i:s') }}</td>
                                                 <td><a target="_blank" href="{{ meeting['join_url'] }}">join</a></td>
-                                            </tr> 
+                                            </tr>
                                         {% endfor %}
                                     {%endif%}
                                     </tbody>
@@ -126,7 +126,7 @@
                                             <td>{{ meeting['time_zone'] ?? '' }}</td>
                                              <td>{{ created_at|date('d M, Y H:i:s') }}</td>
                                             <td><a target="_blank" href="{{ meeting['meet_url'] }}">join</a></td>
-                                        </tr> 
+                                        </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
@@ -173,7 +173,7 @@
                             {{ form_row(form.images) }}
                             {{ form_row(form.save) }}
                             {{ form_end(form) }}
-                            
+
                         </div>
                     </div>
                 </div>
@@ -192,7 +192,7 @@
     <script>
 
         $(document).ready(function () {
-            
+
             $('.venue-map').hide();
             function getVenueAddress() {
                 var address = '';

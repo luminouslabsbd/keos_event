@@ -48,7 +48,7 @@
                                             <label class="required">Clint Secret</label>
                                             <input type="text" value="{{ zoom_data['zoom_clint_secret']??''}}" name="zoom_clint_secret" required="required" class="form-control">
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <button class="btn btn-primary">Save</button>
                                         </div>
@@ -67,7 +67,7 @@
                                 <div class="zoom_form mt-2">
 
                                     <form action="{{path('google_api_setting')}}" method="post"  enctype="multipart/form-data">
-                                        
+
                                         <div class="form-group">
                                             <label class="required">Google Calendar Id</label>
                                             <input type="text" value="{{ google_data['google_calendar_id']??''}}" name="google_calendar_id" required="required" class="form-control">
@@ -76,7 +76,7 @@
                                             <label class="required">Credential File</label>
                                             <input type="file" name="google_filename" required="required"  class="form-control" accept=".json">
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <button class="btn btn-primary">Save</button>
                                         </div>
